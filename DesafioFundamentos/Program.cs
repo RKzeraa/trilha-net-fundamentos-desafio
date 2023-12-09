@@ -2,14 +2,16 @@
 
 // Coloca o encoding para UTF8 para exibir acentuação
 Console.OutputEncoding = System.Text.Encoding.UTF8;
+// Instancia a classe Estacionamento, já com os valores obtidos anteriormente
 
+TextCustom textCustom = new TextCustom();
+textCustom.Animacao();
 Console.WriteLine("Seja bem vindo ao sistema de estacionamento!");
 
-decimal precoInicial = ObterPrecoInicial();
+decimal precoInicial = ObterPrecoInicial(textCustom);
 
-decimal precoPorHora = ObterPrecoPorHora();
+decimal precoPorHora = ObterPrecoPorHora(textCustom);
 
-// Instancia a classe Estacionamento, já com os valores obtidos anteriormente
 Estacionamento es = new Estacionamento(precoInicial, precoPorHora);
 
 string opcao = string.Empty;
@@ -18,20 +20,22 @@ bool exibirMenu = true;
 // Realiza o loop do menu
 while (exibirMenu)
 {
-    Console.Clear();
+    textCustom.ShowLogo();
     Console.WriteLine("Digite a sua opção:");
     Console.WriteLine("1 - Cadastrar veículo");
     Console.WriteLine("2 - Remover veículo");
     Console.WriteLine("3 - Listar veículos");
     Console.WriteLine("4 - Encerrar");
+    Console.Write("\r\nSelecione uma opção: ");
 
     switch (Console.ReadLine())
     {
-        case "1":
+        case "1":  
             es.AdicionarVeiculo();
             break;
 
         case "2":
+            Console.Clear();
             es.RemoverVeiculo();
             break;
 
@@ -40,11 +44,13 @@ while (exibirMenu)
             break;
 
         case "4":
+            textCustom.ShowLogo();
             exibirMenu = false;
             break;
 
         default:
-            Console.WriteLine("Opção inválida");
+            textCustom.ShowLogo();
+            textCustom.ApplyColor("Opção inválida", ConsoleColor.Red);
             break;
     }
 
@@ -52,13 +58,14 @@ while (exibirMenu)
     Console.ReadLine();
 }
 
-Console.WriteLine("O programa se encerrou");
+textCustom.Animacao();
 
 #region Métodos
-static decimal ObterPrecoInicial()
+static decimal ObterPrecoInicial(TextCustom textCustom)
 {
     while(true)
     {
+        textCustom.ShowLogo();
         Console.WriteLine("Digite o preço inicial:");
 
         if (decimal.TryParse(Console.ReadLine(), out decimal preco) && preco >= 0)
@@ -67,16 +74,17 @@ static decimal ObterPrecoInicial()
         }
         else
         {
-            Console.Clear();
-            Console.WriteLine("O valor digitado não é um número válido");
+            textCustom.ShowLogo();
+            textCustom.ApplyColor("O valor digitado não é um número válido", ConsoleColor.Red);
         }
     }
 }
 
-static decimal ObterPrecoPorHora()
+static decimal ObterPrecoPorHora(TextCustom textCustom)
 {
     while(true)
     {
+        textCustom.ShowLogo();
         Console.WriteLine("Agora digite o preço por hora:");
 
         if (decimal.TryParse(Console.ReadLine(), out decimal preco) && preco >= 0)
@@ -85,8 +93,8 @@ static decimal ObterPrecoPorHora()
         }
         else
         {
-            Console.Clear();
-            Console.WriteLine("O valor digitado não é um número válido");
+            textCustom.ShowLogo();
+            textCustom.ApplyColor("O valor digitado não é um número válido", ConsoleColor.Red);
         }
     }
 }
