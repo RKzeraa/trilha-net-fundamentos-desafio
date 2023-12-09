@@ -36,3 +36,30 @@ Por último, deverá ser feito um menu interativo com as seguintes ações imple
 
 ## Solução
 O código está pela metade, e você deverá dar continuidade obedecendo as regras descritas acima, para que no final, tenhamos um programa funcional. Procure pela palavra comentada "TODO" no código, em seguida, implemente conforme as regras acima.
+
+
+## Contribuição
+Nesse projeto optei em ir mais além, deixando o projeto com o meu estilo.
+
+Com isso utilizei algumas coisas a mais, são elas:
+
+- **ASCII Art**
+- **Class Custom**
+- **DateTime**
+- **Tupla**
+- **Regex**
+- **Thread**
+- **ConsoleColor**
+
+
+A ideia foi deixar o visual do Console mais organizado e com minhas características, dai vem a ideia de brincar com **ASCII Art** para mostrar a Logo, também ao encerrar o sistema, o **ConsoleColor** para colorir o console dando mais ênfase enquanto sucesso ou fracasso, e a **Class Custom** para reunir toda essa parte visual referente ao texto no Console, além de colocar **Thread** para brincar um pouco, na tentativa fazer algum tipo de animação, que nesse caso usei para gerar uma barra de carregamento ao iniciar e ao finalizar o sistema.
+
+
+
+Brincando um pouco com **DateTime** para pegar a hora em que o veiculo chega no estacionamento, para não criar uma classe a mais, optei por gerar uma **Tupla** pegando no primeiro valor uma string que nesse caso é a placa, e no segundo valor um **DateTime** que vai ser a hora de entrada, além de usar o **TimeSpan** e transformar em inteiro para auxiliar no cálculo do valor total.
+
+Para validar a placa fiz alguns **Regex** me baseando nas placas brasileiras, no formato antigo que possui 3 letras e 4 números, e no novo formato que é 3 letras, 1 número, 1 letra e 2 números, além de usar o **.Trim()** e o **.Replace()**.
+
+
+
+_Develop By RKzeraa🔌_
