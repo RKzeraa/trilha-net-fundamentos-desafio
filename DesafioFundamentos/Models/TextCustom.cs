@@ -9,7 +9,7 @@ namespace DesafioFundamentos.Models
             _originalColor = Console.ForegroundColor;
         }
 
-        static string Logo()
+        private string Logo()
         {
             return @"
 ___  _____   __  ___                      ___          _   
@@ -21,7 +21,7 @@ _____________________________________________________________
             ";
         }
 
-        static string Name()
+        private static string Name()
         {
             return @"
 ____________________________________________________        
@@ -63,7 +63,7 @@ ____________________________________________________
             Console.ForegroundColor = _originalColor;
         }
 
-        public void ShowBy()
+        private void ShowBy()
         {
             Console.Clear();
             ApplyColor("Desenvolvido por: \n" + Name(), ConsoleColor.DarkMagenta);
