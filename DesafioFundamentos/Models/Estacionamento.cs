@@ -19,38 +19,35 @@ namespace DesafioFundamentos.Models
 
         public void AdicionarVeiculo()
         {
-            // TODO: Pedir para o usuário digitar uma placa (ReadLine) e adicionar na lista "veiculos"
-            // *IMPLEMENTE AQUI*
             _textCustom.ShowLogo();
-            Console.WriteLine("Digite a placa do veículo para estacionar:");
-            string placa = Console.ReadLine().Trim().Replace("-", "").ToUpper();
-            while(true){
-                if(!ExistePlaca(placa))
+            do
+            {
+                
+                Console.WriteLine("Digite a placa do veículo para estacionar:");
+
+                string placa = Console.ReadLine().Trim().Replace("-", "").ToUpper();
+
+                if (ExistePlaca(placa))
                 {
-                    if(PlacaValida(placa)){
-                        _textCustom.ShowLogo();
-                        DateTime horaEntrada = DateTime.Now;
-                        _veiculos.Add(new (placa, horaEntrada));
-                        _textCustom.ApplyColor($"O veículo {FormatarPlaca(placa)} foi liberado para estacionar! ✅ \nHora de Entrada: {horaEntrada.ToString("HH:mm")}", ConsoleColor.DarkGreen);
-                        break;
-                    }
-                    else
-                    {
-                        _textCustom.ShowLogo();
-                        _textCustom.ApplyColor("Desculpe, essa placa não é válida. ❌\nExemplo de placa valida: AAA-0000 ou AAA0000 ou AAA0A00 ⚠", ConsoleColor.Red);
-                        Console.WriteLine("Digite uma placa válida:");
-                        placa = Console.ReadLine().Trim().Replace("-", "").ToUpper();
-                    }
+                    _textCustom.ShowLogo();
+                    _textCustom.ApplyColor($"Desculpe, esse veículo {FormatarPlaca(placa)} já está estacionado aqui. ❌\nCaso a placa e as características dos veículos sejam idênticas, favor entrar em contato com a polícia.\nDisk Denúncia: 181", ConsoleColor.Red);
+                    break;
+                }
+
+                if (!PlacaValida(placa))
+                {
+                    _textCustom.ShowLogo();
+                    _textCustom.ApplyColor("Desculpe, essa placa não é válida. ❌\nExemplo de placa válida: AAA-0000 ou AAA0000 ou AAA0A00 ⚠", ConsoleColor.Red);
                 }
                 else
                 {
+                    DateTime horaEntrada = DateTime.Now;
+                    _veiculos.Add(new Tuple<string, DateTime>(placa, horaEntrada));
                     _textCustom.ShowLogo();
-                    _textCustom.ApplyColor($"Desculpe, esse veículo {FormatarPlaca(placa)} já está estacionado aqui. ❌" +
-                     "\nCaso a placa e as características dos veículos sejam idênticas, favor entrar em contato com a policia." +
-                     "\nDisk Denuncia: 181", ConsoleColor.Red);
+                    _textCustom.ApplyColor($"O veículo {FormatarPlaca(placa)} foi liberado para estacionar! ✅ \nHora de Entrada: {horaEntrada.ToString("HH:mm")}", ConsoleColor.DarkGreen);
                     break;
                 }
-            }
+            } while (true);
         }
 
         private bool ExistePlaca(string placa)
@@ -107,59 +104,43 @@ namespace DesafioFundamentos.Models
         }
         public void RemoverVeiculo()
         {
-            if(!_veiculos.Any())
+            if (!_veiculos.Any())
             {
                 _textCustom.ShowLogo();
                 _textCustom.ApplyColor("Não há veículos estacionados. ❌", ConsoleColor.Red);
                 return;
-            } 
-            else
+            }
+
+            _textCustom.ShowLogo();
+            ListarVeiculos();
+
+            Console.WriteLine("\nDigite a placa do veículo para remover:");
+            string placa = Console.ReadLine().Trim().Replace("-", "").ToUpper();
+            if(!PlacaValida(placa))
             {
                 _textCustom.ShowLogo();
-                ListarVeiculos();
-                Console.WriteLine("\nDigite a placa do veículo para remover:");
-                // Pedir para o usuário digitar a placa e armazenar na variável placa
-                // *IMPLEMENTE AQUI*
-                string placa = Console.ReadLine().Trim().Replace("-", "").ToUpper();
-                while(true){            
-                    // Verifica se o veículo existe
-                    if (ExistePlaca(placa))
-                    {
-                        DateTime horaEntrada = _veiculos.FirstOrDefault(x => x.Item1 == placa).Item2;
-                        DateTime horaSaida = DateTime.Now;
-                        int diferenca = (int)CalcularDiferencaDeHoras(horaEntrada, horaSaida).TotalHours;
-                        _textCustom.ShowLogo();
-                        Console.WriteLine($"O veículo {FormatarPlaca(placa)} permaneceu estacionado por {diferenca}h");
-                        // TODO: Realizar o seguinte cálculo: "precoInicial + precoPorHora * horas" para a variável valorTotal                
-                        // *IMPLEMENTE AQUI*
-
-                        decimal valorTotal = ValorPagar(diferenca);
-
-                        // TODO: Remover a placa digitada da lista de veículos
-                        _veiculos.Remove(_veiculos.FirstOrDefault(x => x.Item1 == placa));
-                        // *IMPLEMENTE AQUI*
-
-                        _textCustom.ApplyColor($"Saida liberada {FormatarPlaca(placa)}, o preço total pago foi de: R$ {valorTotal} ✔", ConsoleColor.DarkGreen);
-                        break;
-                    }
-                    else
-                    {
-                        if(!PlacaValida(placa))
-                        {
-                            _textCustom.ShowLogo();
-                            _textCustom.ApplyColor("Desculpe, essa placa não é válida. ❌\nExemplo de placa valida: AAA-0000 ou AAA0000 ou AAA0A00 ⚠", ConsoleColor.Red);
-                            Console.WriteLine("Digite uma placa válida:");
-                            placa = Console.ReadLine().Trim().Replace("-", "").ToUpper();
-                        }
-                        else
-                        {
-                            _textCustom.ShowLogo();
-                            _textCustom.ApplyColor($"Desculpe, esse veículo {FormatarPlaca(placa)} não está estacionado aqui. ❌\nConfira se digitou a placa corretamente ⚠", ConsoleColor.Red);
-                            break;
-                        }
-                    }
-                }
+                _textCustom.ApplyColor("Desculpe, essa placa não é válida. ❌\nExemplo de placa válida: AAA-0000 ou AAA0000 ou AAA0A00 ⚠", ConsoleColor.Red);
+                return;
             }
+            if (!ExistePlaca(placa))
+            {
+                _textCustom.ShowLogo();
+                _textCustom.ApplyColor($"Desculpe, esse veículo {FormatarPlaca(placa)} não está estacionado aqui. ❌\nConfira se digitou a placa corretamente ⚠", ConsoleColor.Red);
+                return;
+            }
+
+            DateTime horaEntrada = _veiculos.First(x => x.Item1 == placa).Item2;
+            DateTime horaSaida = DateTime.Now;
+            int diferenca = (int)CalcularDiferencaDeHoras(horaEntrada, horaSaida).TotalHours;
+
+            _textCustom.ShowLogo();
+            Console.WriteLine($"O veículo {FormatarPlaca(placa)} permaneceu estacionado por {diferenca}h");
+
+            decimal valorTotal = ValorPagar(diferenca);
+
+            _veiculos.Remove(_veiculos.First(x => x.Item1 == placa));
+
+            _textCustom.ApplyColor($"Saída liberada {FormatarPlaca(placa)}, o preço total pago foi de: R$ {valorTotal} ✔", ConsoleColor.DarkGreen);
         }
 
         private decimal ValorPagar(int diferenca)
