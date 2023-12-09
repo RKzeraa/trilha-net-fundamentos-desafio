@@ -3,15 +3,11 @@
 // Coloca o encoding para UTF8 para exibir acentuação
 Console.OutputEncoding = System.Text.Encoding.UTF8;
 
-decimal precoInicial = 0;
-decimal precoPorHora = 0;
+Console.WriteLine("Seja bem vindo ao sistema de estacionamento!");
 
-Console.WriteLine("Seja bem vindo ao sistema de estacionamento!\n" +
-                  "Digite o preço inicial:");
-precoInicial = Convert.ToDecimal(Console.ReadLine());
+decimal precoInicial = ObterPrecoInicial();
 
-Console.WriteLine("Agora digite o preço por hora:");
-precoPorHora = Convert.ToDecimal(Console.ReadLine());
+decimal precoPorHora = ObterPrecoPorHora();
 
 // Instancia a classe Estacionamento, já com os valores obtidos anteriormente
 Estacionamento es = new Estacionamento(precoInicial, precoPorHora);
@@ -57,3 +53,42 @@ while (exibirMenu)
 }
 
 Console.WriteLine("O programa se encerrou");
+
+#region Métodos
+static decimal ObterPrecoInicial()
+{
+    while(true)
+    {
+        Console.WriteLine("Digite o preço inicial:");
+
+        if (decimal.TryParse(Console.ReadLine(), out decimal preco) && preco >= 0)
+        {
+            return preco;
+        }
+        else
+        {
+            Console.Clear();
+            Console.WriteLine("O valor digitado não é um número válido");
+        }
+    }
+}
+
+static decimal ObterPrecoPorHora()
+{
+    while(true)
+    {
+        Console.WriteLine("Agora digite o preço por hora:");
+
+        if (decimal.TryParse(Console.ReadLine(), out decimal preco) && preco >= 0)
+        {
+            return preco;
+        }
+        else
+        {
+            Console.Clear();
+            Console.WriteLine("O valor digitado não é um número válido");
+        }
+    }
+}
+
+#endregion
